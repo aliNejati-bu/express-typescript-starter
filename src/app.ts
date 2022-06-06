@@ -17,7 +17,7 @@ const run = () => {
 
 
     app.listen(PORT as number, SERVER, () => {
-        console.log(`App Run On: http://${SERVER}:${PORT}`);
+        console.log(`App Run On: http:e://${SERVER}:${PORT}`);
     });
 
 
