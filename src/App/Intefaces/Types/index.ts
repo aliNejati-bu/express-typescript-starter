@@ -1,1 +1,1 @@
-export const ILoggerService = Symbol("ILoggerService");
+export const LoggerService = Symbol("ILoggerService");
