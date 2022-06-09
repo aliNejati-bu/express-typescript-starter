@@ -1,9 +1,17 @@
-import express, * as express_test from "express"
+import * as express from "express"
+import router from "./Router";
 
-const app = express ? express() : express_test();
+const app = express();
 
-export const run = async (PORT:number,HOST:string) => {
-    app.listen(PORT,HOST,() => {
+export const run = async (PORT: number, HOST: string) => {
+
+    app.use(express.json());
+
+    app.use(express.urlencoded({extended: true}));
+
+    router.init(app);
+
+    app.listen(PORT, HOST, () => {
         console.log(`Server running on http://${HOST}:${PORT}`);
     });
 }
