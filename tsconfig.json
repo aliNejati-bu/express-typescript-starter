@@ -1,13 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["es6"],
-    "types": ["reflect-metadata"],
     "module": "commonjs",
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "noImplicitAny": false,
+    "sourceMap": false,
     "emitDecoratorMetadata": true,
-    "outDir": "./build",
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "outDir": "./dist/",
     "allowSyntheticDefaultImports": true
-  }
+  },
+  "compileOnSave": false,
+  "exclude": [
+    "node_modules"
+  ]
 }
