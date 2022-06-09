@@ -9,6 +9,9 @@ class ExampleController extends Controller {
 
 export default function (): ExampleController {
     const controller = new ExampleController();
+
+    // add method to actions
     controller.addAction("/test", "get", controller.testMethod);
+
     return controller;
 }
