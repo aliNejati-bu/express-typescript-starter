@@ -48,34 +48,4 @@ export class Controller {
         })
         return router;
     }
-
-    response(res, data = {}, message = "", token = undefined, status = "ok", statusCode = 200) {
-
-        if (typeof res === 'undefined') {
-            return new Error('response object is not set')
-        }
-
-        let response = {}
-        if (typeof token === 'undefined') {
-
-            response = {
-                status,
-                message,
-                data,
-            }
-
-            res.status(statusCode).send(response)
-            return
-        }
-
-        response = {
-            status,
-            message,
-            data,
-            token
-        }
-
-        res.status(statusCode).send(response)
-
-    }
 }

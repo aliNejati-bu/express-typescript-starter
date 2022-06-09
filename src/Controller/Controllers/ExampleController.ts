@@ -1,9 +1,15 @@
 import {Controller} from "..";
 import {NextFunction, Request, Response} from "express";
+import {baseResponse} from "../../helpers/functions";
+import {inject, injectable} from "inversify";
+import {UserValidator} from "../../Middleware/Validators/UserValidator";
+
 
 class ExampleController extends Controller {
+
+
     testMethod(req: Request, res: Response, next?: NextFunction) {
-        this.response(res, {}, "", undefined, "ok", 200);
+        return baseResponse(res, (new UserValidator()).createUser({}), "validation test", undefined, "ok", 200);
     }
 }
 
