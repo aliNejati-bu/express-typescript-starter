@@ -1,4 +1,4 @@
-import {ILoggerService} from "../../../Interfaces/LoggeService/ILoggerService";
+import {ILoggerService} from "../../../../Utils/Interfaces/LoggeService/ILoggerService";
 import {injectable} from "inversify";
 
 @injectable()
