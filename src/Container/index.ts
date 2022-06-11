@@ -5,10 +5,15 @@ import {ConsoleLoggerService} from '../App/Services/LoggerService/ConsoleLoggerS
 import {TYPES} from '../App/Interfaces/Types';
 import {UserValidator} from "../Middleware/Validators/UserValidator";
 import {BaseValidator} from "../Middleware/Validators/BaseValidator";
+import {DataTypes} from "../Data/Interfaces/Types/DataTypes";
+import {IDatabaseService} from "../Data/Interfaces/IDatabaseService";
+import {MongooseDatabaseService} from "../Data/MongooseDatabaseService";
+
 
 // create new container default in singleton mode
 let container = new Container({defaultScope: 'Singleton'});
 container.bind<ILoggerService>(TYPES.ILoggerService).to(ConsoleLoggerService);
+container.bind<IDatabaseService>(DataTypes.IDatabaseService).to(MongooseDatabaseService);
 
 
 // bind validator to container
