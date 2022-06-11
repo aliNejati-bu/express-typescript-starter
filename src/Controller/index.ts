@@ -6,19 +6,20 @@ const router = Router();
 
 
 export class Controller {
-    private basePath: string;
+    private readonly basePath: string;
 
-    constructor(basePath: string) {
-        this.basePath = basePath
-    }
+
 
     private action: Array<{
         path: string,
         methode: "get" | "post" | "put" | "delete",
         handler: (req: Request, res: Response, next?: NextFunction) => void,
         middlewares?: ((req: Request, res: Response, next?: NextFunction) => void)[]
-    }> = []
-
+    }>;
+    constructor(basePath: string) {
+        this.basePath = basePath
+        this.action = []
+    }
     public addAction(
         path: string,
         methode: "get" | "post" | "put" | "delete",

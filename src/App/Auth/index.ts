@@ -23,7 +23,7 @@ export class Auth {
             const userExists = await this._userRepository.findByEmail(email);
 
 
-            if (userExists.isError) {
+            if (!userExists.isError) {
                 return new BaseAppResult<null | { id: string }>(null, true, "User already exists", ResultStatus.Duplicate);
             }
             const user = new User(

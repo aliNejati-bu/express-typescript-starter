@@ -1,19 +1,20 @@
 import {Controller} from "../index";
 import {Request, Response} from "express";
 import {NextFunction} from "express/ts4.0";
-import {inject} from "inversify";
 import {Auth} from "../../App/Auth";
 import {baseResponse} from "../../helpers/functions";
 import {ResultStatus} from "../../App/Model/Result/ResultStatus";
 import {UserValidator} from "../../Middleware/Validators/UserValidator";
 import {wrapValidatorToMiddleware} from "../../Middleware/general";
+import {container} from "../../Container";
 
 export class AuthController extends Controller {
 
-    @inject(Auth) private _auth: Auth
-    @inject(UserValidator) public _userValidator: UserValidator
+    constructor(
+        private _auth: Auth,
+        public _userValidator: UserValidator
+    ) {
 
-    constructor() {
         super("/user");
     }
 
@@ -31,7 +32,10 @@ export class AuthController extends Controller {
 }
 
 export default function (): AuthController {
-    const controller = new AuthController();
+    const controller = new AuthController(
+        container.get(Auth),
+        container.get(UserValidator)
+    );
     controller.addAction(
         "/",
         "post",
