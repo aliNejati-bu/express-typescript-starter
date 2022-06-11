@@ -5,6 +5,7 @@ import MongooseUserModel from "../Model/MongooseUserModel";
 import {inject, injectable} from "inversify";
 import {UtilsTypes} from "../../../Utils/Interfaces/Types/UtilsTypes";
 import {ILoggerService} from "../../../Utils/Interfaces/LoggeService/ILoggerService";
+import {BaseDataError} from "../../Errors/BaseDataError";
 
 @injectable()
 export class MongooseUserRepository implements IUserRepository {
@@ -17,7 +18,24 @@ export class MongooseUserRepository implements IUserRepository {
             return new BaseDataResult<User>(result.toObject(), false);
         } catch (e) {
             this._loggerService.error(e);
-            return new BaseDataResult(null, true);
+            throw new BaseDataError("Error while creating user");
+        }
+    }
+
+    async findByEmail(email: string): Promise<BaseDataResult<User>> {
+        try {
+            const result = await MongooseUserModel.findOne({
+                email
+            });
+
+            if (!result) {
+                return new BaseDataResult(null, true);
+            }
+
+            return new BaseDataResult<User>(result.toObject(), false);
+        } catch (e) {
+            this._loggerService.error(e);
+            throw new BaseDataError("Error while finding user");
         }
     }
 }

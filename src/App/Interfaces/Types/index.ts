@@ -1,4 +1,4 @@
 const TYPES = {
-    IValidatorService: Symbol.for("IValidatorService")
+    IIDService: Symbol('IIDService'),
 }
 export {TYPES};

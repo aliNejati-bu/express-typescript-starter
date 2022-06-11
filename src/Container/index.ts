@@ -11,6 +11,8 @@ import {MongooseDatabaseService} from "../Data/MongooseDatabaseService";
 import {IUserRepository} from "../Data/Interfaces/Repositories/IUserRepository";
 import {MongooseUserRepository} from "../Data/MongooseDatabaseService/Repository/MongooseUserRepository";
 import {UtilsTypes} from "../Utils/Interfaces/Types/UtilsTypes";
+import {IIDService} from "../App/Interfaces/IDService/IIDService";
+import {UUIDService} from "../App/Services/IDService/UUIDService";
 
 
 // create new container default in singleton mode
@@ -21,10 +23,11 @@ container.bind<ILoggerService>(UtilsTypes.ILoggerService).to(ConsoleLoggerServic
 
 
 // bind app services
-container.bind<IDatabaseService>(DataTypes.IDatabaseService).to(MongooseDatabaseService);
+container.bind<IIDService>(TYPES.IIDService).to(UUIDService);
 
 
 // bind repositories
+container.bind<IDatabaseService>(DataTypes.IDatabaseService).to(MongooseDatabaseService);
 container.bind<IUserRepository>(DataTypes.IUserRepository).to(MongooseUserRepository)
 
 
