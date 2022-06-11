@@ -10,6 +10,9 @@ import {TYPES} from "../../App/Interfaces/Types";
 
 class ExampleController extends Controller {
 
+    constructor() {
+        super("/test");
+    }
 
     testMethod(req: Request, res: Response, next?: NextFunction) {
         return baseResponse(res,container.get(TYPES.IIDService), "validation test", undefined, "ok", 200);

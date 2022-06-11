@@ -8,9 +8,9 @@ import {injectable} from "inversify";
 export class UserValidator extends BaseValidator {
     createUser<T>(input): BaseValidatorAppResult<T | null> {
         let schema = joi.object().keys({
-            name: joi.string().required(),
-            email: joi.string().email().required(),
-            password: joi.string().required()
+            name: joi.string().required().max(255),
+            email: joi.string().email().required().max(255),
+            password: joi.string().required().max(255)
         });
         return this.createResult<T>(schema, input);
     }

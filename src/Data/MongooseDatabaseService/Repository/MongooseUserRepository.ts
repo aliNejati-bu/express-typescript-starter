@@ -9,7 +9,6 @@ import {BaseDataError} from "../../Errors/BaseDataError";
 
 @injectable()
 export class MongooseUserRepository implements IUserRepository {
-    @inject(UtilsTypes.ILoggerService) private _loggerService: ILoggerService;
 
     async create(user: User): Promise<BaseDataResult<User>> {
         try {
@@ -17,8 +16,7 @@ export class MongooseUserRepository implements IUserRepository {
             const result = await mongooseUser.save();
             return new BaseDataResult<User>(result.toObject(), false);
         } catch (e) {
-            this._loggerService.error(e);
-            throw new BaseDataError("Error while creating user");
+            throw new BaseDataError("Error while creating user", e);
         }
     }
 
@@ -34,8 +32,7 @@ export class MongooseUserRepository implements IUserRepository {
 
             return new BaseDataResult<User>(result.toObject(), false);
         } catch (e) {
-            this._loggerService.error(e);
-            throw new BaseDataError("Error while finding user");
+            throw new BaseDataError("Error while finding user", e);
         }
     }
 }

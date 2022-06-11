@@ -1,5 +1,5 @@
 export class BaseDataError extends Error {
-    constructor(message: string) {
+    constructor(message: string,public originalError?: Error) {
         super();
     }
 }

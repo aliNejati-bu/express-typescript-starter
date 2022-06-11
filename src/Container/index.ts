@@ -13,6 +13,7 @@ import {MongooseUserRepository} from "../Data/MongooseDatabaseService/Repository
 import {UtilsTypes} from "../Utils/Interfaces/Types/UtilsTypes";
 import {IIDService} from "../App/Interfaces/IDService/IIDService";
 import {UUIDService} from "../App/Services/IDService/UUIDService";
+import {Auth} from "../App/Auth";
 
 
 // create new container default in singleton mode
@@ -24,6 +25,10 @@ container.bind<ILoggerService>(UtilsTypes.ILoggerService).to(ConsoleLoggerServic
 
 // bind app services
 container.bind<IIDService>(TYPES.IIDService).to(UUIDService);
+
+
+//bind app implementations
+container.bind<Auth>(Auth).to(Auth);
 
 
 // bind repositories

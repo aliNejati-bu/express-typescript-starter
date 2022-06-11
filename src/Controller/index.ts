@@ -6,7 +6,11 @@ const router = Router();
 
 
 export class Controller {
+    private basePath: string;
 
+    constructor(basePath: string) {
+        this.basePath = basePath
+    }
 
     private action: Array<{
         path: string,
@@ -22,7 +26,7 @@ export class Controller {
         middlewares?: Array<(req: Request, res: Response, next?: NextFunction) => void>
     ): void {
         this.action.push({
-            path,
+            path:this.basePath + path,
             methode,
             handler: handler.bind(this),
             middlewares
