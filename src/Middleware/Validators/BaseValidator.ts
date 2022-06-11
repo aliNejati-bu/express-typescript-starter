@@ -1,5 +1,7 @@
 import {BaseValidatorAppResult} from "../../App/Model/Result/Validator/BaseValidatorAppResult";
+import {injectable} from "inversify";
 
+@injectable()
 export class BaseValidator {
     protected createResult<T>(schema: any, input: any): BaseValidatorAppResult<T | null> {
         let result: BaseValidatorAppResult<T | null> = new BaseValidatorAppResult<T | null>(null, [], false);

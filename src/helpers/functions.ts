@@ -1,4 +1,4 @@
-export function baseResponse(res, data = {}, message = "", token = undefined, status = "ok", statusCode = 200) {
+export function baseResponse(res, data: any = {}, message: string = "", token: any = undefined, status = "ok", statusCode = 200) {
 
     if (typeof res === 'undefined') {
         return new Error('response object is not set')
