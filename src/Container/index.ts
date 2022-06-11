@@ -8,12 +8,17 @@ import {BaseValidator} from "../Middleware/Validators/BaseValidator";
 import {DataTypes} from "../Data/Interfaces/Types/DataTypes";
 import {IDatabaseService} from "../Data/Interfaces/IDatabaseService";
 import {MongooseDatabaseService} from "../Data/MongooseDatabaseService";
+import {IUserRepository} from "../Data/Interfaces/Repositories/IUserRepository";
+import {MongooseUserRepository} from "../Data/MongooseDatabaseService/Repository/MongooseUserRepository";
 
 
 // create new container default in singleton mode
 let container = new Container({defaultScope: 'Singleton'});
 container.bind<ILoggerService>(TYPES.ILoggerService).to(ConsoleLoggerService);
 container.bind<IDatabaseService>(DataTypes.IDatabaseService).to(MongooseDatabaseService);
+
+// bind repositories
+container.bind<IUserRepository>(DataTypes.IUserRepository).to(MongooseUserRepository)
 
 
 // bind validator to container

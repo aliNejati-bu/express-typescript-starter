@@ -6,7 +6,6 @@ import {DataTypes} from "./src/Data/Interfaces/Types/DataTypes";
 import {IDatabaseService} from "./src/Data/Interfaces/IDatabaseService";
 import {config} from "dotenv";
 config();
-
 // connect to database
 container.get<IDatabaseService>(DataTypes.IDatabaseService).connect()
     .then(() => {

@@ -1,6 +1,8 @@
 import {IDatabaseService} from "../Interfaces/IDatabaseService";
 import * as mongoose from "mongoose";
-import {injectable} from "inversify";
+import {inject, injectable} from "inversify";
+import {IUserRepository} from "../Interfaces/Repositories/IUserRepository";
+import {DataTypes} from "../Interfaces/Types/DataTypes";
 
 @injectable()
 export class MongooseDatabaseService implements IDatabaseService {
@@ -8,4 +10,6 @@ export class MongooseDatabaseService implements IDatabaseService {
         // connect to mongoose
         await mongoose.connect(process.env.MONGO_URI ?? "mongodb://localhost:27017/avattech", {});
     }
+
+    @inject(DataTypes.IUserRepository) userRepository: IUserRepository;
 }
