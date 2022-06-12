@@ -1,8 +1,9 @@
 import {ITokenService} from "../../../Interfaces/TokenService/ITokenService";
 import * as jwt from "jsonwebtoken"
 import {BaseAppError} from "../../../Errors/BaseAppError";
+import {injectable} from "inversify";
 
-
+@injectable()
 export class JsonwebtokenTokenService implements ITokenService {
 
 

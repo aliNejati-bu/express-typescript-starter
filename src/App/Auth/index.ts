@@ -8,15 +8,18 @@ import {BaseAppResult} from "../Model/Result/BaseAppResult";
 import {ResultStatus} from "../Model/Result/ResultStatus";
 import {UtilsTypes} from "../../Utils/Interfaces/Types/UtilsTypes";
 import {ILoggerService} from "../../Utils/Interfaces/LoggeService/ILoggerService";
+import {ITokenService} from "../Interfaces/TokenService/ITokenService";
+import {IPasswordService} from "../Interfaces/PasswordService/IPasswordService";
 
 @injectable()
 export class Auth {
-    constructor(
-        @inject(DataTypes.IUserRepository) public _userRepository: IUserRepository,
-        @inject(TYPES.IIDService) public _idService: IIDService,
-        @inject(UtilsTypes.ILoggerService) public _loggerService: ILoggerService
-    ) {
-    }
+
+    @inject(DataTypes.IUserRepository) public _userRepository: IUserRepository;
+    @inject(TYPES.IIDService) public _idService: IIDService;
+    @inject(UtilsTypes.ILoggerService) public _loggerService: ILoggerService;
+    @inject(TYPES.ITokenService) public _tokenService: ITokenService
+    @inject(TYPES.IPasswordService) public _passwordService: IPasswordService;
+
 
     async createUser(name: string, email: string, password: string): Promise<BaseAppResult<null | { id: string }>> {
         try {
@@ -30,7 +33,7 @@ export class Auth {
                 this._idService.generate(),
                 name,
                 email,
-                password,
+                await this._passwordService.hash(password),
                 new Date(),
                 new Date()
             );
@@ -48,5 +51,8 @@ export class Auth {
             this._loggerService.error(e.originalError ? e.originalError.message : e.message);
             return new BaseAppResult<null | { id: string }>(null, true, "Error creating user", ResultStatus.Unknown);
         }
+    }
+
+    async getTokenByEmailAndPassword() {
     }
 }

@@ -14,6 +14,10 @@ import {UtilsTypes} from "../Utils/Interfaces/Types/UtilsTypes";
 import {IIDService} from "../App/Interfaces/IDService/IIDService";
 import {UUIDService} from "../App/Services/IDService/UUIDService";
 import {Auth} from "../App/Auth";
+import {ITokenService} from "../App/Interfaces/TokenService/ITokenService";
+import {JsonwebtokenTokenService} from "../App/Services/TokenService/JsonwebtokenTokenService";
+import {IPasswordService} from "../App/Interfaces/PasswordService/IPasswordService";
+import {BcryptPasswordService} from "../App/Services/PasswordService/BcryptPasswordService";
 
 
 // create new container default in singleton mode
@@ -25,7 +29,8 @@ container.bind<ILoggerService>(UtilsTypes.ILoggerService).to(ConsoleLoggerServic
 
 // bind app services
 container.bind<IIDService>(TYPES.IIDService).to(UUIDService);
-
+container.bind<ITokenService>(TYPES.ITokenService).to(JsonwebtokenTokenService);
+container.bind<IPasswordService>(TYPES.IPasswordService).to(BcryptPasswordService);
 
 //bind app implementations
 container.bind<Auth>(Auth).to(Auth);
@@ -33,7 +38,7 @@ container.bind<Auth>(Auth).to(Auth);
 
 // bind repositories
 container.bind<IDatabaseService>(DataTypes.IDatabaseService).to(MongooseDatabaseService);
-container.bind<IUserRepository>(DataTypes.IUserRepository).to(MongooseUserRepository)
+container.bind<IUserRepository>(DataTypes.IUserRepository).to(MongooseUserRepository);
 
 
 // bind validator to container

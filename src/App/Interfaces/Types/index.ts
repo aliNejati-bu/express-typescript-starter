@@ -1,5 +1,6 @@
 const TYPES = {
-    IIDService: Symbol('IIDService'),
-    ITokenService: Symbol('ITokenService'),
+    IIDService: Symbol.for('IIDService'),
+    ITokenService: Symbol.for('ITokenService'),
+    IPasswordService: Symbol.for('IPasswordService')
 }
 export {TYPES};
