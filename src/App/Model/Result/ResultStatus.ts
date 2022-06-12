@@ -1,5 +1,6 @@
-export enum ResultStatus{
+export enum ResultStatus {
     Success = "Success",
     Duplicate = "Duplicate",
-    Unknown = "Unknown"
+    Unknown = "Unknown",
+    NotMatch = "NotMatch",
 }

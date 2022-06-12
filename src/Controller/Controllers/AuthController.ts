@@ -29,6 +29,23 @@ export class AuthController extends Controller {
         }
         return baseResponse(res, result.result, "User created.");
     }
+
+    async login(req: Request, res: Response, next: NextFunction) {
+        const result = await this._auth.getTokenByEmailAndPassword(req.body.email, req.body.password);
+        if (result.isError) {
+            if (result.ResultStatus == ResultStatus.NotMatch) {
+                return baseResponse(res, null, "Email and password not match.", undefined, result.ResultStatus, 400);
+            } else {
+                return baseResponse(res, null, "Error creating user", undefined, result.ResultStatus, 500);
+            }
+        }
+        return baseResponse(res, {
+                tokenLifeTime: result.result.lifeTime
+            },
+            "token Generated.",
+            result.result.token)
+    }
+
 }
 
 export default function (): AuthController {
@@ -42,6 +59,15 @@ export default function (): AuthController {
         controller.addUser,
         [
             wrapValidatorToMiddleware(controller._userValidator.createUser)
+        ]
+    );
+
+    controller.addAction(
+        "/getToken",
+        "post",
+        controller.login,
+        [
+            wrapValidatorToMiddleware(controller._userValidator.getToken)
         ]
     );
     return controller;
