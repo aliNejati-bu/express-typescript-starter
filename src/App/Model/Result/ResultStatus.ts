@@ -3,4 +3,7 @@ export enum ResultStatus {
     Duplicate = "Duplicate",
     Unknown = "Unknown",
     NotMatch = "NotMatch",
+    Invalid = "Invalid",
+    NotFound = "NotFound",
+    NotAuthorized = "NotAuthorized",
 }

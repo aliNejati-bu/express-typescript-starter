@@ -11,6 +11,7 @@ import {ILoggerService} from "../../Utils/Interfaces/LoggeService/ILoggerService
 import {ITokenService} from "../Interfaces/TokenService/ITokenService";
 import {IPasswordService} from "../Interfaces/PasswordService/IPasswordService";
 import {AdminTokenPayload} from "../Entities/AdminTokenPayload";
+import {trace} from "joi";
 
 @injectable()
 export class Auth {
@@ -90,6 +91,7 @@ export class Auth {
 
             // check if token secret not exists return error
             if (!tokenSecret) {
+                this._loggerService.error("Token secret not exists.", trace());
                 return new BaseAppResult<{ token: string; lifeTime: number } | null>(
                     null,
                     true,
@@ -103,7 +105,7 @@ export class Auth {
 
 
             // generate token
-            let token = await this._tokenService.createToken(new AdminTokenPayload(user.data._id,["admin"],user.data.email).toPlainObject(), tokenSecret, +tokenLifeTime);
+            let token = await this._tokenService.createToken(new AdminTokenPayload(user.data._id, ["admin"], user.data.email).toPlainObject(), tokenSecret, +tokenLifeTime);
 
             // return token
             return new BaseAppResult<{ token: string; lifeTime: number } | null>(
@@ -120,4 +122,37 @@ export class Auth {
             return new BaseAppResult<{ token: string; lifeTime: number } | null>(null, true, "Error creating user.", ResultStatus.Unknown)
         }
     }
+
+    async verifyAdminToken(token: string): Promise<BaseAppResult<AdminTokenPayload | null>> {
+        try {
+            // get token secret from environment
+            let tokenSecret = process.env.TOKEN_SECRET;
+
+            // check if token secret not exists return error
+            if (!tokenSecret) {
+                return new BaseAppResult<AdminTokenPayload | null>(null, true, "Token secret not exists.", ResultStatus.Unknown)
+            }
+
+            // verify token
+            let verifyTokenResult = await this._tokenService.verifyToken<AdminTokenPayload>(token, tokenSecret);
+            if (!verifyTokenResult) {
+                return new BaseAppResult<AdminTokenPayload | null>(null, true, "Invalid token.", ResultStatus.Invalid)
+            }
+
+            if (!(verifyTokenResult as AdminTokenPayload).scope.includes("admin")) {
+                return new BaseAppResult<AdminTokenPayload | null>(null, true, "Invalid token.", ResultStatus.Invalid)
+            }
+
+            return new BaseAppResult<AdminTokenPayload | null>(
+                verifyTokenResult as AdminTokenPayload,
+                false,
+                "Token verified.",
+                ResultStatus.Success
+            )
+        } catch (e) {
+            this._loggerService.error(e.originalError ? e.originalError : e);
+            return new BaseAppResult<AdminTokenPayload | null>(null, true, "Error.", ResultStatus.Unknown)
+        }
+    }
+
 }
