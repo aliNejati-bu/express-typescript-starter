@@ -1,4 +1,4 @@
-export function baseResponse(res, data: any = {}, message: string = "", token: any = undefined, status:string = "ok", statusCode = 200) {
+export function baseResponse(res, data: any = {}, message: string = "", token: any = undefined, status: string = "ok", statusCode = 200) {
 
     if (typeof res === 'undefined') {
         return new Error('response object is not set')
@@ -26,4 +26,14 @@ export function baseResponse(res, data: any = {}, message: string = "", token: a
 
     res.status(statusCode).send(response)
 
+}
+
+export function asyncWrapper(fn: Function) {
+    return async (req, res, next) => {
+        try {
+            await fn(req, res, next)
+        } catch (err) {
+            next(err)
+        }
+    }
 }
